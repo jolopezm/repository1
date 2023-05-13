@@ -56,7 +56,7 @@
 				</div>
 				<div class="form-group col-12">
 					<label for="input2">RUT</label>
-					<input type="text" class="form-control col-6" id="rut" placeholder="Ingrese su RUT sin puntos ni guión">
+					<input type="text" class="form-control col-6" id="rut" placeholder="Ingrese su RUT sin puntos ni guión" required="required" pattern="/^\d{8}[\dKk]$/" title="Ingrese un rut correcto">
 				</div>
 				<div class="form-group col-12">
 					<label for="input3">Teléfono</label>
@@ -122,6 +122,49 @@
 	
 		return (uppercaseCount >= 2 && numberCount >= 2);
 	}
+
+	const rutInput = document.getElementById("rut");
+	
+	rutInput.addEventListener("blur", function () {
+	  const rutValue = rutInput.value;
+	  let isValid = true;
+	  
+	  if (/^\d{7,8}[\dKk]$/.test(rutValue)) {
+		if (rutValue.length === 9) {
+		  const formattedRUT = rutValue.replace(/(\d{2})(\d{3})(\d{3})(\w{1})/, "$1.$2.$3-$4");
+		  rutInput.value = formattedRUT;
+		}
+	  } else {
+		isValid = false;
+	  }
+	  
+	  if (isValid) {
+		rutInput.classList.remove("is-invalid");
+		rutInput.classList.add("is-valid");
+	  } else {
+		rutInput.classList.remove("is-valid");
+		rutInput.classList.add("is-invalid");
+	  }
+	});
+
+	//validación email
+
+	const emailInput = document.getElementById("email");
+	
+	emailInput.addEventListener("blur", function () {
+	  const emailValue = emailInput.value;
+	
+	  if (/^\S+@\S+\.\S+$/.test(emailValue)) {
+		emailInput.classList.remove("is-invalid");
+		emailInput.classList.add("is-valid");
+	  } else {
+		emailInput.style.borderColor = "red";
+		emailInput.classList.add("is-invalid");
+	  }
+	});
+	
+	
+
 </script>
 </html>
 
